@@ -88,7 +88,7 @@ app.put("/id/:id", (req, res) => {
 // Crear endpoint para poder eliminar un producto
 
 app.delete("/id/:id", (req, res) => {
-    const found = productos.some(product => product.id == req.params.id)
+    const found = productos.some(product => product.id == req.params.id);
     if (found) {
         const productFilter = productos.filter(product => product.id != req.params.id);
         res.send(productFilter);
@@ -100,19 +100,41 @@ app.delete("/id/:id", (req, res) => {
 // Crear filtro por precio de producto
 
 app.get("/filter/price", (req, res) => {
-    
-})
+    productos.sort((a, b) => a.precio - b.precio);
+    res.status(200).send(productos);
+});
 
 // Crear filtro que muestre los productos con un precio entre 50 y 250.
 
-
+app.get("/filter/price/range", (req, res) => {
+    const productosFiltrados = productos.filter(product => product.precio >= 50 && product.precio <= 250);
+    res.status(200).send(productosFiltrados);
+});
 
 // Crear un filtro que cuando busque en postman por parámetro el id de un producto me devuelva ese producto
 
-
+app.get("/id/:id", (req, res) => {
+    const found = productos.some(product => product.id == req.params.id);
+    if (found) {
+        const product = productos[req.params.id-1];
+        res.send(product);
+    } else {
+        res.status(404).send(`Doesn't exist`);
+    }
+})
 
 // Crear un filtro que cuando busque en postman por parámetro el nombre de un producto me devuelva ese product
 
-
+app.get("/nombre/:nombre", (req, res) => {
+    const eliminarEspacios = req.params.nombre.replace(/\s/g, '')
+    const found = productos.some(product => product.nombre.toLowerCase().replace(/\s/g, '') == req.params.nombre);
+    console.log(found);
+    if (found) {
+        const product = productos.find(product => product.nombre.toLowerCase().replace(/\s/g, '') === req.params.nombre.toLowerCase());
+        res.send(product);
+    } else {
+        res.status(404).send(`Doesn't exist this product`);
+    }
+})
 
 app.listen(PORT, () => console.log(`Servidor ejercicio 3 levantado en el puerto ${PORT}`));

@@ -1,0 +1,21 @@
+{
+  "name": "ejercicio.express-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "e1.js",
+  "scripts": {
+    "start": "node e1.js",
+    "dev": "nodemon e1.js",
+    "dev2": "nodemon ej2.js",
+    "dev3": "nodemon ej3.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
